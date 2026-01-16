@@ -30,6 +30,7 @@ i'm currently focused on **The-Nexus-Protocol-TNP**, a headless protocol for ai 
 
 ### 💬 connect with me
 [<img src="https://img.shields.io/badge/discord-5865F2?style=for-the-badge&logo=discord&logoColor=white">](https://discord.com/users/1053662381064073347)
+[<img src="https://img.shields.io/badge/gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white">](mailto:yoriikun28@gmail.com)
 
 <!--
 **syfmtexture/syfmtexture** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
