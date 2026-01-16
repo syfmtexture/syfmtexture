@@ -1,6 +1,6 @@
 ![my-banner](https://i.ibb.co/r2W86jgm/download-37.jpg)
 
-# hi, i'm Abhiraj 👋 
+# hi, i'm abhi 👋 
 
 ### ⚡ building the future of ai agents
 i'm currently focused on **The-Nexus-Protocol-TNP**, a headless protocol for ai agents to transact autonomously. essentially making the visa/dns for the machine economy. 
@@ -8,21 +8,28 @@ i'm currently focused on **The-Nexus-Protocol-TNP**, a headless protocol for ai 
 ---
 
 ### 🛠 tech stack
+![python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+![tensorflow](https://img.shields.io/badge/TensorFlow-%23FF6F00.svg?style=for-the-badge&logo=TensorFlow&logoColor=white)
+![javascript](https://img.shields.io/badge/javascript-%23F7DF1E.svg?style=for-the-badge&logo=javascript&logoColor=black)
 ![typescript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 ![rust](https://img.shields.io/badge/rust-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)
-![next.js](https://img.shields.io/badge/next.js-%23000000.svg?style=for-the-badge&logo=next.js&logoColor=white)
-![node.js](https://img.shields.io/badge/node.js-%23339933.svg?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![sql](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
+![html5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![css3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
 
 ---
 
-### 📊 stats
-![Abhi's GitHub stats](https://github-readme-stats.vercel.app/api?username=syfmtexture&show_icons=true&theme=dark)
-![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=syfmtexture&layout=compact&theme=dark)
+### 🚀 what i'm up to
+- 🤖 **working on:** deep learning models for autonomous agent negotiation.
+- 🏗 **building:** decentralized infrastructure for the machine economy.
+- 📖 **learning:** advanced zero-knowledge proofs and protocol security.
+- 🎯 **goal:** making agents more useful than just chat bots.
 
 ---
 
 ### 💬 connect with me
-[<img src="https://img.shields.io/badge/discord-5865F2?style=for-the-badge&logo=discord&logoColor=white">](https://discordapp.com/users/1053662381064073347)
+[<img src="https://img.shields.io/badge/discord-5865F2?style=for-the-badge&logo=discord&logoColor=white">](https://discord.com/users/1053662381064073347)
 
 <!--
 **syfmtexture/syfmtexture** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
