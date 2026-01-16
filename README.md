@@ -1,4 +1,4 @@
-![my-banner](https://i.ibb.co/r2W86jgm/download-37.jpg)
+![my-banner](https://i.ibb.co/MxB5zkrM/Ichigo-Kurosaki.jpg)
 
 # hi, i'm abhi 👋 
 
