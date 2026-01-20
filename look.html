@@ -3,422 +3,567 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Status | Sunless</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <title>System Interface</title>
+    <!-- Fonts: Cinzel (Ancient vibes) and Space Mono (System vibes) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
-            --shadow-gold: #c5a059;
-            --shadow-dim: #5c4d35;
-            --bg-dark: #050505;
-            --panel-bg: rgba(10, 10, 12, 0.85);
-            --border-color: rgba(197, 160, 89, 0.3);
+            --bg-deep: #050508;
+            --bg-panel: #0a0a12;
+            --border-dim: #1a1a2e;
+            --spell-cyan: #00f0ff;
+            --spell-dim: #005f66;
+            --text-main: #e0e0e0;
+            --text-muted: #6b7280;
+            --gold: #ffd700;
+            --danger: #ff2a2a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            cursor: default; /* System cursor feel */
         }
 
         body {
-            background-color: var(--bg-dark);
-            color: #e0e0e0;
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: 'Space Mono', monospace;
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            overflow-x: hidden;
             background-image: 
-                radial-gradient(circle at 50% 50%, rgba(197, 160, 89, 0.05) 0%, transparent 50%),
-                linear-gradient(to bottom, #050505 0%, #0a0a0c 100%);
+                radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.03) 0%, transparent 50%),
+                linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px);
+            background-size: 100% 100%, 20px 20px, 20px 20px;
         }
 
-        .cinzel { font-family: 'Cinzel', serif; }
-        .mono { font-family: 'JetBrains Mono', monospace; }
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-deep);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--spell-dim);
+            border: 1px solid var(--spell-cyan);
+        }
 
-        .text-gold { color: var(--shadow-gold); }
-        .border-gold { border-color: var(--shadow-gold); }
+        /* Utilities */
+        .spell-text {
+            color: var(--spell-cyan);
+            text-shadow: 0 0 5px rgba(0, 240, 255, 0.5);
+        }
         
-        .glow-text {
-            text-shadow: 0 0 10px rgba(197, 160, 89, 0.4);
+        .spell-border {
+            border: 1px solid var(--spell-dim);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.05);
+            background: rgba(10, 10, 18, 0.8);
+            backdrop-filter: blur(5px);
         }
 
-        .status-panel {
-            background: var(--panel-bg);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--border-color);
-            box-shadow: 0 0 40px rgba(0,0,0,0.8), inset 0 0 20px rgba(197, 160, 89, 0.05);
-            position: relative;
-        }
-
-        .status-panel::before, .status-panel::after {
-            content: '';
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            border: 1px solid var(--shadow-gold);
-            transition: all 0.3s ease;
-        }
-
-        .status-panel::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
-        .status-panel::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
-
-        .rune-border {
-            border-bottom: 1px solid var(--border-color);
-            position: relative;
-        }
-
-        .rune-border::after {
-            content: 'ᛟ ᚲ ᛊ ᚨ ᛏ ᚱ ᛖ';
-            position: absolute;
-            bottom: -10px;
-            right: 0;
-            background: var(--bg-dark);
-            padding-left: 10px;
-            color: var(--shadow-dim);
-            font-size: 0.7rem;
+        .cinzel {
             font-family: 'Cinzel', serif;
         }
 
-        /* Tabs */
-        .tab-btn {
-            border-bottom: 2px solid transparent;
-            transition: all 0.3s;
-            opacity: 0.6;
-        }
-        .tab-btn.active {
-            border-color: var(--shadow-gold);
-            color: var(--shadow-gold);
-            opacity: 1;
-            text-shadow: 0 0 8px rgba(197, 160, 89, 0.3);
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
         }
 
-        /* Scrollbar inside panel */
-        .custom-scroll::-webkit-scrollbar { width: 4px; }
-        .custom-scroll::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
-        .custom-scroll::-webkit-scrollbar-thumb { background: var(--shadow-dim); border-radius: 2px; }
-        .custom-scroll::-webkit-scrollbar-thumb:hover { background: var(--shadow-gold); }
-
-        .stat-bar {
-            background: rgba(255,255,255,0.05);
-            height: 4px;
-            border-radius: 2px;
-            overflow: hidden;
-        }
-        .stat-fill {
+        /* Runes Background - Purely Aesthetic */
+        .runes-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
             height: 100%;
-            background: var(--shadow-gold);
-            box-shadow: 0 0 10px var(--shadow-gold);
-            width: 0%;
-            transition: width 1.5s ease-out;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+            opacity: 0.05;
+            font-family: 'Cinzel', serif;
+            word-wrap: break-word;
+            font-size: 2rem;
+            line-height: 3rem;
+            color: var(--spell-cyan);
+            user-select: none;
         }
 
-        .item-row:hover {
-            background: rgba(197, 160, 89, 0.05);
-            cursor: default;
+        /* Header / Status Section */
+        header {
+            margin-bottom: 40px;
+            margin-top: 40px;
+            border-bottom: 1px solid var(--spell-dim);
+            padding-bottom: 20px;
+            position: relative;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background: var(--spell-cyan);
+            box-shadow: 0 0 10px var(--spell-cyan);
+        }
+
+        .true-name {
+            font-size: 0.9rem;
+            color: var(--spell-cyan);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .rank-badge {
+            display: inline-block;
+            border: 1px solid var(--spell-cyan);
+            padding: 5px 12px;
+            font-size: 0.8rem;
+            color: var(--spell-cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            background: rgba(0, 240, 255, 0.1);
+        }
+
+        /* Grid Layout */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+
+        @media (min-width: 768px) {
+            .grid-layout {
+                grid-template-columns: 300px 1fr;
+            }
+        }
+
+        /* Sidebar (Attributes) */
+        .attribute-box {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-dim);
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
-        .animate-flicker {
-            animation: flicker 4s infinite;
+        .section-title i {
+            color: var(--spell-cyan);
         }
 
-        @keyframes flicker {
-            0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% { opacity: 1; }
-            20%, 21.999%, 63%, 63.999%, 65%, 69.999% { opacity: 0.8; }
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+        }
+
+        .stat-val {
+            color: var(--text-main);
+            font-weight: bold;
+        }
+
+        .stat-val.gold { color: var(--gold); text-shadow: 0 0 5px rgba(255, 215, 0, 0.3); }
+        .stat-val.cyan { color: var(--spell-cyan); }
+
+        /* Main Content */
+        .description {
+            line-height: 1.8;
+            color: var(--text-main);
+            margin-bottom: 40px;
+            border-left: 2px solid var(--spell-dim);
+            padding-left: 20px;
+            background: linear-gradient(90deg, rgba(0, 240, 255, 0.05), transparent);
+        }
+
+        /* Aspects (Skills) */
+        .aspects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .aspect-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-dim);
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .aspect-card:hover {
+            border-color: var(--spell-cyan);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        .aspect-rank {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .aspect-name {
+            color: var(--spell-cyan);
+            font-weight: bold;
+        }
+
+        /* Memories (Projects) */
+        .memory-card {
+            border: 1px solid var(--border-dim);
+            padding: 20px;
+            margin-bottom: 20px;
+            background: rgba(10, 10, 18, 0.6);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .memory-card:hover {
+            border-color: var(--spell-cyan);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
+        }
+
+        .memory-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 0%;
+            background: var(--spell-cyan);
+            transition: height 0.3s ease;
+        }
+
+        .memory-card:hover::before {
+            height: 100%;
+        }
+
+        .memory-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .memory-title {
+            font-size: 1.1rem;
+            color: white;
+            font-weight: bold;
+        }
+
+        .memory-tier {
+            font-size: 0.75rem;
+            padding: 2px 6px;
+            border: 1px solid var(--text-muted);
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+        
+        .memory-card:hover .memory-tier {
+            border-color: var(--spell-cyan);
+            color: var(--spell-cyan);
+        }
+
+        .memory-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .memory-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--spell-cyan);
+            text-decoration: none;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        .memory-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Floating particles/runes animation */
+        @keyframes float {
+            0% { transform: translateY(0); opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { transform: translateY(-100px); opacity: 0; }
+        }
+
+        /* Loading Screen */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            font-family: 'Space Mono';
+        }
+
+        .loader-text {
+            color: var(--spell-cyan);
+            margin-top: 20px;
+            letter-spacing: 0.2em;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; text-shadow: 0 0 10px var(--spell-cyan); }
+            50% { opacity: 0.5; text-shadow: 0 0 2px var(--spell-cyan); }
+        }
+        
+        /* Mobile adjustments */
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .grid-layout { grid-template-columns: 1fr; }
         }
     </style>
 </head>
-<body class="p-4">
+<body>
 
-    <!-- Main Interface Container -->
-    <main class="w-full max-w-5xl h-[85vh] flex flex-col md:flex-row gap-6 animate-flicker">
+    <!-- Loading Screen -->
+    <div id="loader">
+        <i data-lucide="hexagon" class="text-cyan-400 w-12 h-12 animate-spin" style="color: #00f0ff;"></i>
+        <div class="loader-text">INITIALIZING SPELL...</div>
+    </div>
+
+    <!-- Background Runes -->
+    <div class="runes-bg" id="runesContainer">
+        <!-- JS will populate this -->
+    </div>
+
+    <div class="container">
         
-        <!-- LEFT COLUMN: Core Stats -->
-        <section class="status-panel w-full md:w-1/3 flex flex-col p-6 rounded-sm h-full overflow-hidden">
-            <!-- Header -->
-            <div class="mb-8 text-center relative">
-                <div class="w-24 h-24 mx-auto mb-4 relative flex items-center justify-center">
-                    <div class="absolute inset-0 border border-[#c5a059] rotate-45 opacity-50"></div>
-                    <div class="absolute inset-0 border border-[#c5a059] opacity-50"></div>
-                    <span class="text-4xl">👁️</span>
-                </div>
-                <h1 class="text-3xl cinzel text-gold glow-text font-bold">SUNLESS</h1>
-                <p class="text-xs tracking-[0.3em] uppercase text-gray-500 mt-2">True Name</p>
-            </div>
+        <!-- HEADER -->
+        <header>
+            <span class="true-name">[LOST FROM DSA]</span>
+            <h1 class="cinzel">[ABHIRAJ]</h1>
+            <div class="rank-badge">Rank: Supreme</div>
+        </header>
 
-            <!-- Vital Stats -->
-            <div class="space-y-6 flex-1 custom-scroll overflow-y-auto pr-2">
-                <div>
-                    <div class="flex justify-between text-xs uppercase tracking-widest mb-1 text-gray-400">Rank</div>
-                    <div class="text-lg cinzel text-white">Transcendent</div>
-                </div>
-                
-                <div>
-                    <div class="flex justify-between text-xs uppercase tracking-widest mb-1 text-gray-400">Class</div>
-                    <div class="text-lg cinzel text-white">Terror <span class="text-xs text-gray-600 ml-2">(Satyr)</span></div>
-                </div>
-
-                <div>
-                    <div class="flex justify-between text-xs uppercase tracking-widest mb-1 text-gray-400">Shadow Essence</div>
-                    <div class="flex items-end gap-2 mb-1">
-                        <span class="text-xl mono text-gold">4,291</span>
-                        <span class="text-xs text-gray-600 mb-1">/ 10,000</span>
-                    </div>
-                    <div class="stat-bar"><div class="stat-fill" style="width: 42%"></div></div>
-                </div>
-
-                <div>
-                    <div class="flex justify-between text-xs uppercase tracking-widest mb-1 text-gray-400">Soul Cores</div>
-                    <div class="flex gap-1 mt-2">
-                        <div class="h-2 flex-1 bg-[#c5a059] shadow-[0_0_5px_#c5a059]"></div>
-                        <div class="h-2 flex-1 bg-[#c5a059] shadow-[0_0_5px_#c5a059]"></div>
-                        <div class="h-2 flex-1 bg-[#c5a059] shadow-[0_0_5px_#c5a059]"></div>
-                        <div class="h-2 flex-1 bg-[#c5a059] shadow-[0_0_5px_#c5a059]"></div>
-                        <div class="h-2 flex-1 bg-[#c5a059] shadow-[0_0_5px_#c5a059]"></div>
-                        <div class="h-2 flex-1 bg-[#c5a059] shadow-[0_0_5px_#c5a059]"></div>
-                        <div class="h-2 flex-1 bg-[#1a1a1a] border border-white/10"></div>
-                    </div>
-                    <p class="text-right text-[10px] text-gray-500 mt-1">6 / 7 Fragments</p>
-                </div>
-
-                <div class="pt-4 border-t border-white/5">
-                    <p class="text-xs uppercase tracking-widest text-gray-400 mb-3">Innate Abilities</p>
-                    <ul class="space-y-2 text-sm font-light">
-                        <li class="flex items-center gap-2"><span class="text-gold">✦</span> Shadow Step</li>
-                        <li class="flex items-center gap-2"><span class="text-gold">✦</span> Shadow Manifestation</li>
-                        <li class="flex items-center gap-2"><span class="text-gold">✦</span> Shadow Dance (Relic)</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Footer Status -->
-            <div class="mt-auto pt-4 border-t border-white/10 text-center">
-                <span class="inline-block px-2 py-1 bg-red-900/20 border border-red-900/50 text-red-400 text-[10px] tracking-widest uppercase">
-                    Status: Hunted
-                </span>
-            </div>
-        </section>
-
-        <!-- RIGHT COLUMN: Detailed Tabs -->
-        <section class="status-panel w-full md:w-2/3 flex flex-col p-0 rounded-sm h-full overflow-hidden">
-            <!-- Tab Header -->
-            <div class="flex border-b border-white/10 bg-black/20">
-                <button onclick="switchTab('attributes')" class="tab-btn active flex-1 py-4 text-xs md:text-sm uppercase tracking-[0.2em] font-bold">Attributes</button>
-                <button onclick="switchTab('memories')" class="tab-btn flex-1 py-4 text-xs md:text-sm uppercase tracking-[0.2em] font-bold">Memories</button>
-                <button onclick="switchTab('shadows')" class="tab-btn flex-1 py-4 text-xs md:text-sm uppercase tracking-[0.2em] font-bold">Shadows</button>
-            </div>
-
-            <!-- Tab Content Area -->
-            <div class="flex-1 p-6 overflow-hidden relative">
-                
-                <!-- ATTRIBUTES TAB -->
-                <div id="attributes" class="tab-content h-full overflow-y-auto custom-scroll space-y-4">
-                    <div class="rune-border mb-6 pb-2">
-                        <h2 class="text-xl cinzel text-white">Aspect & Flaws</h2>
-                    </div>
-
-                    <div class="grid gap-4">
-                        <div class="p-4 border border-white/5 bg-white/[0.02] hover:border-[#c5a059]/30 transition">
-                            <div class="flex justify-between items-start mb-2">
-                                <h3 class="text-gold cinzel font-bold">Shadow Slave</h3>
-                                <span class="text-[10px] uppercase border border-purple-500 text-purple-400 px-1">Divine Aspect</span>
-                            </div>
-                            <p class="text-sm text-gray-400 leading-relaxed">
-                                You are a shadow. You possess an affinity for shadows and can manipulate them. However, a shadow is nothing without a master.
-                            </p>
-                        </div>
-
-                        <div class="p-4 border border-white/5 bg-white/[0.02] hover:border-[#c5a059]/30 transition">
-                            <div class="flex justify-between items-start mb-2">
-                                <h3 class="text-white cinzel font-bold">Fated</h3>
-                                <span class="text-[10px] uppercase border border-white/20 text-gray-400 px-1">Attribute</span>
-                            </div>
-                            <p class="text-sm text-gray-400 leading-relaxed">
-                                It is both a blessing and a curse. You will encounter things that others will not.
-                            </p>
-                        </div>
-
-                        <div class="p-4 border border-red-900/30 bg-red-900/[0.05]">
-                            <div class="flex justify-between items-start mb-2">
-                                <h3 class="text-red-400 cinzel font-bold">Clear Conscience</h3>
-                                <span class="text-[10px] uppercase border border-red-500 text-red-500 px-1">Flaw</span>
-                            </div>
-                            <p class="text-sm text-gray-400 leading-relaxed italic">
-                                "Lying is bad for your soul. Therefore, you cannot lie."
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- MEMORIES TAB -->
-                <div id="memories" class="tab-content hidden h-full overflow-y-auto custom-scroll">
-                    <div class="rune-border mb-6 pb-2 flex justify-between items-end">
-                        <h2 class="text-xl cinzel text-white">Memory Storage</h2>
-                        <span class="text-xs text-gray-500 mono">Capacity: ∞</span>
-                    </div>
-
-                    <div class="space-y-1">
-                        <!-- Header Row -->
-                        <div class="grid grid-cols-12 text-[10px] uppercase text-gray-500 pb-2 border-b border-white/10 px-2">
-                            <div class="col-span-1">Rank</div>
-                            <div class="col-span-4">Name</div>
-                            <div class="col-span-3">Type</div>
-                            <div class="col-span-4 text-right">Enchantment</div>
-                        </div>
-
-                        <!-- Item Rows -->
-                        <div class="grid grid-cols-12 items-center py-3 border-b border-white/5 px-2 item-row">
-                            <div class="col-span-1 text-xs">IV</div>
-                            <div class="col-span-4 font-bold text-white cinzel">Weaver's Mask</div>
-                            <div class="col-span-3 text-xs text-gray-400">Armor (Head)</div>
-                            <div class="col-span-4 text-right text-xs text-gold">[Where is my Eye?]</div>
-                        </div>
-
-                        <div class="grid grid-cols-12 items-center py-3 border-b border-white/5 px-2 item-row">
-                            <div class="col-span-1 text-xs">IV</div>
-                            <div class="col-span-4 font-bold text-white cinzel">Sin of Solace</div>
-                            <div class="col-span-3 text-xs text-gray-400">Weapon (Sword)</div>
-                            <div class="col-span-4 text-right text-xs text-gold">[Madness]</div>
-                        </div>
-
-                        <div class="grid grid-cols-12 items-center py-3 border-b border-white/5 px-2 item-row">
-                            <div class="col-span-1 text-xs">III</div>
-                            <div class="col-span-4 font-bold text-white cinzel">Midnight Shard</div>
-                            <div class="col-span-3 text-xs text-gray-400">Weapon (Tachi)</div>
-                            <div class="col-span-4 text-right text-xs text-gold">[Unbreakable]</div>
-                        </div>
-                        
-                        <div class="grid grid-cols-12 items-center py-3 border-b border-white/5 px-2 item-row">
-                            <div class="col-span-1 text-xs">II</div>
-                            <div class="col-span-4 font-bold text-white cinzel">Covetous Coffer</div>
-                            <div class="col-span-3 text-xs text-gray-400">Utility</div>
-                            <div class="col-span-4 text-right text-xs text-gold">[Devour]</div>
-                        </div>
-
-                        <div class="grid grid-cols-12 items-center py-3 border-b border-white/5 px-2 item-row opacity-50">
-                            <div class="col-span-1 text-xs">--</div>
-                            <div class="col-span-4 font-bold text-gray-500 cinzel">Ordinary Rock</div>
-                            <div class="col-span-3 text-xs text-gray-600">Trash</div>
-                            <div class="col-span-4 text-right text-xs text-gray-600">[Heavy]</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- SHADOWS TAB -->
-                <div id="shadows" class="tab-content hidden h-full overflow-y-auto custom-scroll">
-                    <div class="rune-border mb-6 pb-2">
-                        <h2 class="text-xl cinzel text-white">Echoes & Shadows</h2>
-                    </div>
-
-                    <div class="grid md:grid-cols-2 gap-4">
-                        <!-- Saint -->
-                        <div class="border border-white/10 bg-black/40 p-4 relative overflow-hidden group hover:border-[#c5a059] transition">
-                            <div class="absolute top-0 right-0 p-2 opacity-10 text-6xl select-none group-hover:text-[#c5a059] transition">⚔️</div>
-                            <h3 class="text-lg cinzel font-bold text-white mb-1">Saint</h3>
-                            <p class="text-xs uppercase text-gray-500 mb-4 tracking-widest">Transcendent Devil</p>
-                            <div class="h-1 w-full bg-gray-800 rounded mb-2 overflow-hidden">
-                                <div class="h-full bg-purple-500 w-[90%]"></div>
-                            </div>
-                            <p class="text-[10px] text-right text-gray-400">Integrity: 90%</p>
-                        </div>
-
-                        <!-- Nightmare -->
-                        <div class="border border-white/10 bg-black/40 p-4 relative overflow-hidden group hover:border-[#c5a059] transition">
-                            <div class="absolute top-0 right-0 p-2 opacity-10 text-6xl select-none group-hover:text-[#c5a059] transition">🐴</div>
-                            <h3 class="text-lg cinzel font-bold text-white mb-1">Nightmare</h3>
-                            <p class="text-xs uppercase text-gray-500 mb-4 tracking-widest">Ascended Terror</p>
-                            <div class="h-1 w-full bg-gray-800 rounded mb-2 overflow-hidden">
-                                <div class="h-full bg-black border border-white/20 w-[100%]"></div>
-                            </div>
-                            <p class="text-[10px] text-right text-gray-400">Integrity: 100%</p>
-                        </div>
-
-                        <!-- Imp -->
-                        <div class="border border-white/10 bg-black/40 p-4 relative overflow-hidden group hover:border-[#c5a059] transition">
-                            <div class="absolute top-0 right-0 p-2 opacity-10 text-6xl select-none group-hover:text-[#c5a059] transition">😈</div>
-                            <h3 class="text-lg cinzel font-bold text-white mb-1">Fiend</h3>
-                            <p class="text-xs uppercase text-gray-500 mb-4 tracking-widest">Ascended Tyrant</p>
-                            <div class="h-1 w-full bg-gray-800 rounded mb-2 overflow-hidden">
-                                <div class="h-full bg-red-900 w-[75%]"></div>
-                            </div>
-                            <p class="text-[10px] text-right text-gray-400">Satiety: Hungry</p>
-                        </div>
-
-                        <!-- Soul Serpent -->
-                        <div class="border border-white/10 bg-black/40 p-4 relative overflow-hidden group hover:border-[#c5a059] transition">
-                            <div class="absolute top-0 right-0 p-2 opacity-10 text-6xl select-none group-hover:text-[#c5a059] transition">🐍</div>
-                            <h3 class="text-lg cinzel font-bold text-white mb-1">Soul Serpent</h3>
-                            <p class="text-xs uppercase text-gray-500 mb-4 tracking-widest">Transcendent Beast</p>
-                            <div class="h-1 w-full bg-gray-800 rounded mb-2 overflow-hidden">
-                                <div class="h-full bg-blue-900 w-[100%]"></div>
-                            </div>
-                            <p class="text-[10px] text-right text-gray-400">Status: Tattoo</p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+        <div class="grid-layout">
             
-            <!-- Bottom Runes -->
-            <div class="p-2 border-t border-white/5 text-center">
-                <p class="text-[10px] text-gray-600 font-mono cursor-pointer hover:text-gold transition" onclick="triggerSpell()">
-                    RUNES: [ ᛗ ᛟ ᚱ ᛏ ᚨ ᛚ ᛁ ᛏ ᛃ ]
-                </p>
-            </div>
-        </section>
+            <!-- LEFT COLUMN: ATTRIBUTES -->
+            <aside>
+                <div class="attribute-box spell-border p-5">
+                    <div class="section-title">
+                        <i data-lucide="user"></i> Attributes
+                    </div>
+                    
+                    <div class="stat-row">
+                        <span class="stat-label">Name</span>
+                        <span class="stat-val">[Abhiraj]</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">True Name</span>
+                        <span class="stat-val cyan">Lost from DSA</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Rank</span>
+                        <span class="stat-val">Supreme</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Class</span>
+                        <span class="stat-val">[Unknown]</span>
+                    </div>
+                </div>
 
-    </main>
+                <div class="attribute-box">
+                    <div class="section-title">
+                        <i data-lucide="sparkles"></i> Innate Abilities
+                    </div>
+                    <!-- Replace these with your Soft Skills or Traits -->
+                    <div class="mb-4">
+                        <div class="text-white text-sm font-bold mb-1">[Fated]</div>
+                        <div class="text-xs text-gray-500">Often encounters difficult bugs, but rewards are great.</div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="text-white text-sm font-bold mb-1">[Weaver's Lineage]</div>
+                        <div class="text-xs text-gray-500">Can perceive the hidden threads of spaghetti code.</div>
+                    </div>
+                </div>
 
-    <!-- Overlay Notification -->
-    <div id="spell-overlay" class="fixed inset-0 z-50 bg-black/90 flex items-center justify-center opacity-0 pointer-events-none transition-all duration-500">
-        <div class="text-center transform scale-95 transition-all duration-500" id="spell-msg-box">
-            <h1 class="text-4xl md:text-6xl cinzel text-white mb-4 tracking-widest">[ YOU DIED ]</h1>
-            <p class="text-gold font-mono text-sm">Just kidding. But you almost did.</p>
-            <button onclick="closeSpell()" class="mt-8 px-6 py-2 border border-[#c5a059] text-[#c5a059] hover:bg-[#c5a059] hover:text-black transition uppercase tracking-widest text-xs">
-                Resurrect
-            </button>
+                <div class="attribute-box">
+                    <div class="section-title">
+                        <i data-lucide="mail"></i> Contact
+                    </div>
+                    <a href="mailto:your@email.com" class="block text-sm text-gray-400 hover:text-cyan-400 mb-2 transition-colors">
+                        [abhirajmukadam82@gmail.com]
+                    </a>
+                    <a href="#" class="block text-sm text-gray-400 hover:text-cyan-400 transition-colors">
+                        [LinkedIn / Github]
+                    </a>
+                </div>
+            </aside>
+
+            <!-- RIGHT COLUMN: CONTENT -->
+            <main>
+                <!-- BIO -->
+                <section class="mb-10">
+                    <div class="section-title">
+                        <i data-lucide="scroll"></i> Description
+                    </div>
+                    <div class="description">
+                        <p>
+                            [objective: survive the codebase. attribute: [fated] — code breaks in mysterious ways. ⚖️ balanced between light and shadow.]
+                        </p>
+                    </div>
+                </section>
+
+                <!-- SKILLS / ASPECTS -->
+                <section class="mb-10">
+                    <div class="section-title">
+                        <i data-lucide="zap"></i> Aspects (Skills)
+                    </div>
+                    <div class="aspects-grid">
+                        <!-- Skill 1 -->
+                        <div class="aspect-card">
+                            <span class="aspect-rank">Ascended</span>
+                            <div class="aspect-name">React.js</div>
+                        </div>
+                        <!-- Skill 2 -->
+                        <div class="aspect-card">
+                            <span class="aspect-rank">Awakened</span>
+                            <div class="aspect-name">HTML & CSS</div>
+                        </div>
+                        <!-- Skill 3 -->
+                        <div class="aspect-card">
+                            <span class="aspect-rank">Master</span>
+                            <div class="aspect-name">JavaScript</div>
+                        </div>
+                        <!-- Skill 4 -->
+                        <div class="aspect-card">
+                            <span class="aspect-rank">Dormant</span>
+                            <div class="aspect-name">Python</div>
+                        </div>
+                         <!-- Skill 5 -->
+                         <div class="aspect-card">
+                            <span class="aspect-rank">Transcendent</span>
+                            <div class="aspect-name">Design</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PROJECTS / MEMORIES -->
+                <section>
+                    <div class="section-title">
+                        <i data-lucide="box"></i> Memories (Projects)
+                    </div>
+                    
+                    <!-- Project 1 -->
+                    <div class="memory-card">
+                        <div class="memory-header">
+                            <div class="memory-title">Nexus Protocol</div>
+                            <span class="memory-tier">Supreme Tier</span>
+                        </div>
+                        <p class="memory-desc">
+                            [the nexus protocol is a forbidden weave of shadow-essence, an ancient tethering of spirits that allows the mindless husks of the abyss to whisper amongst themselves.]
+                        </p>
+                        <a href="#" class="memory-link">
+                            Inspect Memory <i data-lucide="https://github.com/syfmtexture/The-Nexus-Protocol-TNP-" width="14"></i>
+                        </a>
+                    </div>
+
+                    <!-- Project 2 -->
+                    <div class="memory-card">
+                        <div class="memory-header">
+                            <div class="memory-title">Recruiter_dashb
+ </div>
+                            <span class="memory-tier">Sacred Tier</span>
+                        </div>
+                        <p class="memory-desc">
+                            [Wield the authority of a sovereign. Within the memory of the spell, the sea of nameless shadows is quelled. every echo is cataloged, every soul-shard ranked by its potency.]
+                        </p>
+                        <a href="#" class="memory-link">
+                            Inspect Memory <i data-lucide="https://github.com/syfmtexture/Recruiter_dashb" width="14"></i>
+                        </a>
+                    </div>
+
+                </section>
+            </main>
         </div>
+
     </div>
 
     <script>
-        // Tab Switching Logic
-        function switchTab(tabId) {
-            // Hide all contents
-            document.querySelectorAll('.tab-content').forEach(el => {
-                el.classList.add('hidden');
-            });
-            // Show selected content
-            document.getElementById(tabId).classList.remove('hidden');
+        // Initialize Lucide Icons
+        lucide.createIcons();
 
-            // Update buttons
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
+        // Loader logic
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loader').style.display = 'none';
+                }, 500);
+            }, 1500); // 1.5s fake loading time for "immersion"
+        });
+
+        // Runes Background Generation
+        const runesContainer = document.getElementById('runesContainer');
+        const runes = "᚛᚜ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛈᛇᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟ∮∯∰∇∆∏∑";
+        
+        function createRune() {
+            const span = document.createElement('span');
+            span.innerText = runes[Math.floor(Math.random() * runes.length)];
+            span.style.position = 'absolute';
+            span.style.left = Math.random() * 100 + 'vw';
+            span.style.top = Math.random() * 100 + 'vh';
+            span.style.fontSize = Math.random() * 20 + 10 + 'px';
+            span.style.opacity = Math.random() * 0.1;
+            span.style.transform = `rotate(${Math.random() * 360}deg)`;
+            
+            runesContainer.appendChild(span);
         }
 
-        // Initialize progress bars animation
-        setTimeout(() => {
-            document.querySelectorAll('.stat-fill').forEach(el => {
-                const width = el.style.width;
-                el.style.width = '0';
-                setTimeout(() => el.style.width = width, 100);
-            });
-        }, 500);
-
-        // Spell Interaction
-        function triggerSpell() {
-            const overlay = document.getElementById('spell-overlay');
-            const msgBox = document.getElementById('spell-msg-box');
-            
-            overlay.classList.remove('opacity-0', 'pointer-events-none');
-            msgBox.classList.remove('scale-95');
-            msgBox.classList.add('scale-100');
-        }
-
-        function closeSpell() {
-            const overlay = document.getElementById('spell-overlay');
-            const msgBox = document.getElementById('spell-msg-box');
-            
-            overlay.classList.add('opacity-0', 'pointer-events-none');
-            msgBox.classList.add('scale-95');
-            msgBox.classList.remove('scale-100');
+        for(let i=0; i<50; i++) {
+            createRune();
         }
     </script>
 </body>
