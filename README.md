@@ -10,6 +10,7 @@ I'm a 19-year-old AI/ML engineering student at Mumbai University. Currently, my 
 ### tech stack & arsenal
 
 **languages**
+
 ![python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 ![typescript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 ![rust](https://img.shields.io/badge/rust-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)
@@ -19,6 +20,7 @@ I'm a 19-year-old AI/ML engineering student at Mumbai University. Currently, my 
 ![bash](https://img.shields.io/badge/GNU%20Bash-4EAA25?style=for-the-badge&logo=GNU%20Bash&logoColor=white)
 
 **ai & machine learning**
+
 ![tensorflow](https://img.shields.io/badge/TensorFlow-%23FF6F00.svg?style=for-the-badge&logo=TensorFlow&logoColor=white)
 ![pytorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=for-the-badge&logo=PyTorch&logoColor=white)
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-%23F7931E.svg?style=for-the-badge&logo=scikit-learn&logoColor=white)
@@ -28,6 +30,7 @@ I'm a 19-year-old AI/ML engineering student at Mumbai University. Currently, my 
 ![opencv](https://img.shields.io/badge/opencv-%23white.svg?style=for-the-badge&logo=opencv&logoColor=white)
 
 **frameworks & frontend**
+
 ![next.js](https://img.shields.io/badge/next.js-%23000000.svg?style=for-the-badge&logo=next.js&logoColor=white)
 ![react](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 ![vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
@@ -35,6 +38,7 @@ I'm a 19-year-old AI/ML engineering student at Mumbai University. Currently, my 
 ![figma](https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white)
 
 **backend & databases**
+
 ![node.js](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
 ![express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
 ![django](https://img.shields.io/badge/django-%23092e20.svg?style=for-the-badge&logo=django&logoColor=white)
@@ -46,6 +50,7 @@ I'm a 19-year-old AI/ML engineering student at Mumbai University. Currently, my 
 ![prisma](https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white)
 
 **cloud, infrastructure & tools**
+
 ![google cloud](https://img.shields.io/badge/GoogleCloud-%234285F4.svg?style=for-the-badge&logo=google-cloud&logoColor=white)
 ![aws](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
 ![docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
@@ -68,7 +73,7 @@ I'm a 19-year-old AI/ML engineering student at Mumbai University. Currently, my 
 ---
 
 ### beyond the screen
-When I'm not fighting with deployments on Koyeb or managing MongoDB Atlas clusters, you can probably find me reading web novels, optimizing my ROG Strix G16, or grinding out a few rounds in Valorant and Black Myth: Wukong. 
+When I'm not fighting with deployments on Koyeb or managing MongoDB Atlas clusters, you can probably find me reading web novels, optimizing my ROG Strix G16, or grinding out a few rounds in The Finals and Where winds meet. 
 
 ### connect with me
 [<img src="https://img.shields.io/badge/discord-5865F2?style=for-the-badge&logo=discord&logoColor=white">](https://discord.com/users/1053662381064073347)
